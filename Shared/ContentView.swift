@@ -24,7 +24,13 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("ASCII Reference")
+            .navigationBarItems(trailing: Button(action: searchButtonTapped) {
+                                    Image(systemName: "magnifyingglass")})
         }
+    }
+
+    func searchButtonTapped() {
+        // TODO
     }
 }
 
@@ -49,7 +55,6 @@ struct AsciiRow: View {
             if let name = ascii.name {
                 Text(name)
                     .font(.caption)
-                    
             }
 
             Spacer()
