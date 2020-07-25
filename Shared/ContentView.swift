@@ -41,8 +41,8 @@ struct AsciiRow: View {
     let ascii: Ascii
 
     var body: some View {
-        let decimalColumnWidth: CGFloat = 50.0
-        let descriptionColumnwidth: CGFloat = 50.0
+        let decimalColumnWidth: CGFloat = 52.0
+        let descriptionColumnwidth: CGFloat = 58.0
 
         HStack(alignment: .lastTextBaseline) {
             Text(String(format: "%02X", ascii.id))
