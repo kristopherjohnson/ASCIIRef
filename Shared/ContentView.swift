@@ -26,7 +26,7 @@ struct ContentView: View {
             .navigationTitle("ASCII Reference")
             .navigationBarItems(trailing: Button(action: searchButtonTapped) {
                                     Image(systemName: "magnifyingglass")})
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 
     func searchButtonTapped() {
@@ -41,26 +41,39 @@ struct AsciiRow: View {
     let ascii: Ascii
 
     var body: some View {
-        HStack {
-            HStack {
-                Text(String(format: "%02X", ascii.id))
-                    .font(Font.headline.monospacedDigit())
-                Text(String(format: "%3d", ascii.id))
-                    .font(Font.subheadline.monospacedDigit())
-            }
+        let decimalColumnWidth: CGFloat = 50.0
+        let descriptionColumnwidth: CGFloat = 50.0
 
-            Text(ascii.description)
-                .font(.headline)
+        HStack(alignment: .lastTextBaseline) {
+            Text(String(format: "%02X", ascii.id))
+                .font(Font.headline.monospacedDigit())
+
+            Text(String(format: "%3d", ascii.id))
+                .font(Font.subheadline.monospacedDigit())
+                .frame(width: decimalColumnWidth)
+
+            HStack {
+                if ascii.description.count > 1 {
+                    Text(ascii.description)
+                        .font(Font.subheadline.smallCaps().bold())
+                } else {
+                    Text(ascii.description)
+                        .font(.headline)
+                }
+                Spacer()
+            }
+            .frame(width: descriptionColumnwidth)
 
             if let name = ascii.name {
                 Text(name)
                     .font(.caption)
+                    .lineLimit(1)
             }
 
             Spacer()
 
             if let escape = ascii.escape {
-                Text("'\(escape)'")
+                Text("\(escape)")
                     .font(Font.system(.caption, design: .monospaced))
             }
 
@@ -78,6 +91,7 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             ContentView()
                 .preferredColorScheme(.light)
+                .environment(\.sizeCategory, .extraExtraExtraLarge)
             ContentView()
                 .preferredColorScheme(.dark)
         }

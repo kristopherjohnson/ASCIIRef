@@ -96,7 +96,7 @@ let asciiCodes = [
     Ascii(id:  30, description: "RS",  name: "Record Separator",          controlKey: "^"),
     Ascii(id:  31, description: "US",  name: "Unit Separator",            controlKey: "_"),
 
-    Ascii(id:  32, description: "Space"),
+    Ascii(id:  32, description: "␠",   name: "Space"),
     Ascii(id:  33, description: "!"),
     Ascii(id:  34, description: "\""),
     Ascii(id:  35, description: "#"),
