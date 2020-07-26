@@ -36,6 +36,55 @@ struct Ascii : Identifiable, CustomStringConvertible {
         self.controlKey = controlKey
         self.escape = escape
     }
+
+    /**
+     Determine whether this element matches a set of search terms.
+     */
+    func matches(terms: [String]) -> Bool {
+        terms.allSatisfy { self.matches(term: $0) }
+    }
+
+    /**
+     Determine whether this element matches a specified search term.
+     */
+    func matches(term: String) -> Bool {
+        let lowerTerm = term.lowercased()
+
+        let hexValue = String(format:"%02x", id)
+        if hexValue.contains(lowerTerm) {
+            return true
+        }
+
+        let decimalValue = String(format:"%d", id)
+        if decimalValue.contains(lowerTerm) {
+            return true
+        }
+
+        if description.lowercased().contains(lowerTerm) {
+            return true
+        }
+
+        if let name = name {
+            if name.lowercased().contains(lowerTerm) {
+                return true
+            }
+        }
+
+        if let controlKey = controlKey {
+            let termToMatch = "^\(controlKey.lowercased())"
+            if termToMatch.contains(lowerTerm) {
+                return true
+            }
+        }
+
+        if let escape = escape {
+            if escape.lowercased().contains(lowerTerm) {
+                return true
+            }
+        }
+
+        return false
+    }
 }
 
 struct AsciiCategory: Identifiable {
