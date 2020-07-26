@@ -25,8 +25,14 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("ASCII Reference")
-            .navigationBarItems(trailing: Button(action: searchButtonTapped) {
-                                    Image(systemName: "magnifyingglass")})
+            .navigationBarItems(
+                trailing: Button(action: searchButtonTapped) {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        Text("Search")
+                    }
+                }
+            )
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .sheet(isPresented: $searchViewIsPresented) {
