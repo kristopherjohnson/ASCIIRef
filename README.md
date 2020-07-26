@@ -2,4 +2,4 @@
 
 Simple SwiftUI example app that lists ASCII codes.
 
-Requires Xcode 12 and iOS 14.
+Requires Xcode 12 and iOS 14.  macOS app is incomplete.
