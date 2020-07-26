@@ -198,5 +198,5 @@ let asciiCodes = [
     Ascii(id: 125, description: "}",   name: "Closing Curly Brace"),
     Ascii(id: 126, description: "~",   name: "Tilde"),
 
-    Ascii(id: 127, description: "DEL", name: "Delete",                    controlKey: "_"),
+    Ascii(id: 127, description: "DEL", name: "Delete", controlKey: "_"),
 ]

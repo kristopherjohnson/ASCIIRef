@@ -11,14 +11,15 @@ import SwiftUI
 struct ContentView: View {
     @State var codes = asciiCodes
     @State var categories = asciiCategories
+    @State var searchViewIsPresented = false
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(categories) { category in
                     Section(header: Text(category.id)) {
-                        ForEach(codes[category.range]) { ascii in
-                            AsciiRow(ascii: ascii)
+                        ForEach(codes[category.range]) { code in
+                            AsciiRow(ascii: code)
                         }
                     }
                 }
@@ -26,65 +27,17 @@ struct ContentView: View {
             .navigationTitle("ASCII Reference")
             .navigationBarItems(trailing: Button(action: searchButtonTapped) {
                                     Image(systemName: "magnifyingglass")})
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .sheet(isPresented: $searchViewIsPresented) {
+            SearchView(isPresented: $searchViewIsPresented)
+        }
     }
 
     func searchButtonTapped() {
-        // TODO
+        searchViewIsPresented.toggle()
     }
 }
-
-/**
- View for a single row in the list.
- */
-struct AsciiRow: View {
-    let ascii: Ascii
-
-    var body: some View {
-        let decimalColumnWidth: CGFloat = 52.0
-        let descriptionColumnwidth: CGFloat = 58.0
-
-        HStack(alignment: .lastTextBaseline) {
-            Text(String(format: "%02X", ascii.id))
-                .font(Font.headline.monospacedDigit())
-
-            Text(String(format: "%3d", ascii.id))
-                .font(Font.subheadline.monospacedDigit())
-                .frame(width: decimalColumnWidth)
-
-            HStack {
-                if ascii.description.count > 1 {
-                    Text(ascii.description)
-                        .font(Font.subheadline.smallCaps().bold())
-                } else {
-                    Text(ascii.description)
-                        .font(.headline)
-                }
-                Spacer()
-            }
-            .frame(width: descriptionColumnwidth)
-
-            if let name = ascii.name {
-                Text(name)
-                    .font(.caption)
-                    .lineLimit(1)
-            }
-
-            Spacer()
-
-            if let escape = ascii.escape {
-                Text("\(escape)")
-                    .font(Font.system(.caption, design: .monospaced))
-            }
-
-            if let controlKey = ascii.controlKey {
-                Text("^\(controlKey)")
-                    .font(Font.system(.caption, design: .monospaced))
-            }
-        }
-    }
-}
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
