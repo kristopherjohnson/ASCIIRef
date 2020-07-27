@@ -39,7 +39,7 @@ class SearchViewModel: ObservableObject {
         if terms.count == 0 {
             return asciiCodes
         }
-        return asciiCodes.filter{ $0.matches(terms: terms) }
+        return asciiCodes.filter { $0.matches(terms: terms) }
     }
 }
 
@@ -64,7 +64,7 @@ struct SearchView: View {
                 .background(Color("SearchTextFieldBackground"))
                 .cornerRadius(16.0)
 
-                Button(action: onCancelTapped) {
+                Button(action: onCloseTapped) {
                     Text("Close")
                 }
             }
@@ -85,7 +85,7 @@ struct SearchView: View {
         }
     }
 
-    func onCancelTapped() {
+    func onCloseTapped() {
         isPresented.toggle()
     }
 }

@@ -21,20 +21,20 @@ struct Ascii : Identifiable, CustomStringConvertible {
     /** Optional control key associated with the character. */
     let controlKey: String?
 
-    /** Option C escape sequence for the character. */
-    let escape: String?
+    /** Optional C Programming Language escape sequence for the character. */
+    let cEscape: String?
 
     init(id: Int,
          description: String,
          name: String? = nil,
          controlKey: String? = nil,
-         escape: String? = nil)
+         cEscape: String? = nil)
     {
         self.id = id
         self.description = description
         self.name = name
         self.controlKey = controlKey
-        self.escape = escape
+        self.cEscape = cEscape
     }
 
     /**
@@ -46,39 +46,39 @@ struct Ascii : Identifiable, CustomStringConvertible {
 
     /**
      Determine whether this element matches a specified search term.
+
+     - returns: `true` if any property contains `term` as a substring, or `false` if not.
      */
     func matches(term: String) -> Bool {
-        let lowerTerm = term.lowercased()
-
         let hexValue = String(format:"%02x", id)
-        if hexValue.contains(lowerTerm) {
+        if hexValue.localizedCaseInsensitiveContains(term) {
             return true
         }
 
         let decimalValue = String(format:"%d", id)
-        if decimalValue.contains(lowerTerm) {
+        if decimalValue.localizedCaseInsensitiveContains(term) {
             return true
         }
 
-        if description.lowercased().contains(lowerTerm) {
+        if description.localizedCaseInsensitiveContains(term) {
             return true
         }
 
         if let name = name {
-            if name.lowercased().contains(lowerTerm) {
+            if name.localizedCaseInsensitiveContains(term) {
                 return true
             }
         }
 
         if let controlKey = controlKey {
-            let termToMatch = "^\(controlKey.lowercased())"
-            if termToMatch.contains(lowerTerm) {
+            let termToMatch = "^\(controlKey)"
+            if termToMatch.localizedCaseInsensitiveContains(term) {
                 return true
             }
         }
 
-        if let escape = escape {
-            if escape.lowercased().contains(lowerTerm) {
+        if let cEscape = cEscape {
+            if cEscape.localizedCaseInsensitiveContains(term) {
                 return true
             }
         }
@@ -87,6 +87,9 @@ struct Ascii : Identifiable, CustomStringConvertible {
     }
 }
 
+/**
+ A named range of ASCII code values.
+ */
 struct AsciiCategory: Identifiable {
     let id: String
     let range: ClosedRange<Int>
@@ -97,7 +100,7 @@ struct AsciiCategory: Identifiable {
 
  Each element is a `(name, range)` pair.
  */
-let asciiCategories = [
+let asciiCategories: [AsciiCategory] = [
     AsciiCategory(id: "Control Characters (00-1F)", range:   0...31),
     AsciiCategory(id: "Punctuation (20-2F)",        range:  32...47),
     AsciiCategory(id: "Digits (30-39)",             range:  48...57),
@@ -109,8 +112,8 @@ let asciiCategories = [
     AsciiCategory(id: "Control Characters (7F)",    range: 127...127)
 ]
 
-/** Array of all ASCII codes. */
-let asciiCodes = [
+/** Array of all 7-bit ASCII codes 1-127. */
+let asciiCodes: [Ascii] = [
     Ascii(id:   0, description: "NUL", name: "Null",                      controlKey: "@"),
     Ascii(id:   1, description: "SOH", name: "Start of Heading",          controlKey: "A"),
     Ascii(id:   2, description: "STX", name: "Start of Text",             controlKey: "B"),
@@ -118,13 +121,13 @@ let asciiCodes = [
     Ascii(id:   4, description: "EOT", name: "End of Transmission",       controlKey: "D"),
     Ascii(id:   5, description: "ENQ", name: "Enquiry",                   controlKey: "E"),
     Ascii(id:   6, description: "ACK", name: "Acknowledgement",           controlKey: "F"),
-    Ascii(id:   7, description: "BEL", name: "Bell",                      controlKey: "G", escape: "\\a"),
-    Ascii(id:   8, description: "BS",  name: "Backspace",                 controlKey: "H", escape: "\\b"),
-    Ascii(id:   9, description: "HT",  name: "Horizontal Tab",            controlKey: "I", escape: "\\t"),
-    Ascii(id:  10, description: "LF",  name: "Line Feed",                 controlKey: "J", escape: "\\n"),
-    Ascii(id:  11, description: "VT",  name: "Vertical Tab",              controlKey: "K", escape: "\\v"),
-    Ascii(id:  12, description: "FF",  name: "Form Feed",                 controlKey: "L", escape: "\\f"),
-    Ascii(id:  13, description: "CR",  name: "Carriage Return",           controlKey: "M", escape: "\\r"),
+    Ascii(id:   7, description: "BEL", name: "Bell",                      controlKey: "G", cEscape: "\\a"),
+    Ascii(id:   8, description: "BS",  name: "Backspace",                 controlKey: "H", cEscape: "\\b"),
+    Ascii(id:   9, description: "HT",  name: "Horizontal Tab",            controlKey: "I", cEscape: "\\t"),
+    Ascii(id:  10, description: "LF",  name: "Line Feed",                 controlKey: "J", cEscape: "\\n"),
+    Ascii(id:  11, description: "VT",  name: "Vertical Tab",              controlKey: "K", cEscape: "\\v"),
+    Ascii(id:  12, description: "FF",  name: "Form Feed",                 controlKey: "L", cEscape: "\\f"),
+    Ascii(id:  13, description: "CR",  name: "Carriage Return",           controlKey: "M", cEscape: "\\r"),
     Ascii(id:  14, description: "SO",  name: "Shift Out",                 controlKey: "N"),
     Ascii(id:  15, description: "SI",  name: "Shift In",                  controlKey: "O"),
 

@@ -9,16 +9,14 @@ import SwiftUI
  Main application view.
  */
 struct ContentView: View {
-    @State var codes = asciiCodes
-    @State var categories = asciiCategories
     @State var searchViewIsPresented = false
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(categories) { category in
+                ForEach(asciiCategories) { category in
                     Section(header: Text(category.id)) {
-                        ForEach(codes[category.range]) { code in
+                        ForEach(asciiCodes[category.range]) { code in
                             AsciiRow(ascii: code)
                         }
                     }
@@ -26,7 +24,7 @@ struct ContentView: View {
             }
             .navigationTitle("ASCII Reference")
             .navigationBarItems(
-                trailing: Button(action: searchButtonTapped) {
+                trailing: Button(action: onSearchButtonTapped) {
                     HStack {
                         Image(systemName: "magnifyingglass")
                         Text("Search")
@@ -40,7 +38,10 @@ struct ContentView: View {
         }
     }
 
-    func searchButtonTapped() {
+    /**
+     Called when the "Search" button is tapped. Shows the `SearchView` modally.
+     */
+    func onSearchButtonTapped() {
         searchViewIsPresented.toggle()
     }
 }

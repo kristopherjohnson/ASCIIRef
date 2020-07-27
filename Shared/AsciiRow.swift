@@ -7,6 +7,8 @@ import SwiftUI
 
 /**
  List item row view for an `Ascii` struct.
+
+ Used in `ContentView` and `SearchView` lists.
  */
 struct AsciiRow: View {
     let ascii: Ascii
@@ -43,8 +45,8 @@ struct AsciiRow: View {
 
             Spacer()
 
-            if let escape = ascii.escape {
-                Text("\(escape)")
+            if let cEscape = ascii.cEscape {
+                Text("\(cEscape)")
                     .font(Font.system(.caption, design: .monospaced))
             }
 
@@ -61,11 +63,11 @@ struct AsciiRow_Previews: PreviewProvider {
         NavigationView {
             List {
                 Section(header: Text("Preview Items")) {
-                AsciiRow(ascii: asciiCodes[9])
-                AsciiRow(ascii: asciiCodes[32])
-                AsciiRow(ascii: asciiCodes[50])
+                    AsciiRow(ascii: asciiCodes[9])
+                    AsciiRow(ascii: asciiCodes[32])
+                    AsciiRow(ascii: asciiCodes[50])
                     AsciiRow(ascii: asciiCodes[64])
-                AsciiRow(ascii: asciiCodes[70])
+                    AsciiRow(ascii: asciiCodes[70])
                 }
             }
             .navigationTitle("AsciiRow Preview")
