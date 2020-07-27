@@ -25,10 +25,8 @@ struct ContentView: View {
             .navigationTitle("ASCII Reference")
             .navigationBarItems(
                 trailing: Button(action: onSearchButtonTapped) {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        Text("Search")
-                    }
+                    Image(systemName: "magnifyingglass")
+                            .imageScale(.large)
                 }
             )
         }
