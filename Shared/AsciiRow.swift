@@ -14,12 +14,14 @@ struct AsciiRow: View {
     let ascii: Ascii
 
     var body: some View {
-        let decimalColumnWidth: CGFloat = 52.0
-        let descriptionColumnwidth: CGFloat = 58.0
+        let hexColumnWidth: CGFloat = 40.0
+        let decimalColumnWidth: CGFloat = 48.0
+        let descriptionColumnwidth: CGFloat = 52.0
 
         HStack(alignment: .lastTextBaseline) {
             Text(String(format: "%02X", ascii.id))
                 .font(Font.headline.monospacedDigit())
+                .frame(width: hexColumnWidth)
 
             Text(String(format: "%3d", ascii.id))
                 .font(Font.subheadline.monospacedDigit())
@@ -63,14 +65,16 @@ struct AsciiRow_Previews: PreviewProvider {
         NavigationView {
             List {
                 Section(header: Text("Preview Items")) {
+                    AsciiRow(ascii: asciiCodes[6])
                     AsciiRow(ascii: asciiCodes[9])
                     AsciiRow(ascii: asciiCodes[32])
                     AsciiRow(ascii: asciiCodes[50])
                     AsciiRow(ascii: asciiCodes[64])
-                    AsciiRow(ascii: asciiCodes[70])
+                    AsciiRow(ascii: asciiCodes[120])
                 }
             }
             .navigationTitle("AsciiRow Preview")
         }
+        .environment(\.sizeCategory, .extraExtraExtraLarge)
     }
 }
