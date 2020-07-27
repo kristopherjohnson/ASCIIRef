@@ -68,7 +68,9 @@ struct SearchView: View {
                     Text("Close")
                 }
             }
-            .padding()
+            .padding([.top, .leading, .trailing])
+
+            Divider()
 
             List {
                 if (model.matches.count > 0) {
